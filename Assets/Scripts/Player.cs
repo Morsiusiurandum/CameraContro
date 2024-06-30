@@ -68,6 +68,11 @@ public class Player : Character
         string filename = Application.dataPath + "/Screenshot" + photonum + ".png";
         System.IO.File.WriteAllBytes(filename, bytes);//保存在本地
         Debug.Log($"成功截屏了一张照片:{filename}");
+
+#if UNITY_EDITOR
+         UnityEditor.AssetDatabase.Refresh();//刷新编辑器，从而自动导入保存的文件
+#endif
+
         photonum++;
 
     }
