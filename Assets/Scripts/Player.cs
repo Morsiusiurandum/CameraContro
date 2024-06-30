@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Player : Character
 {
-    public Camera playercam;//°´E¼ü´ò¿ªÏà»ú
+    public Camera playercam;//æŒ‰Eé”®æ‰“å¼€ç›¸æœº
     bool isopencarm = false;
-    int photonum;//Õâ¸öÊÇÓÀ¾Ã±£´æµÄ£¬²»Ëæ³¡¾°ÇĞ»»¸Ä±ä
+    int photonum;//è¿™ä¸ªæ˜¯æ°¸ä¹…ä¿å­˜çš„ï¼Œä¸éšåœºæ™¯åˆ‡æ¢æ”¹å˜
     // Start is called before the first frame update
     void Start()
     {
@@ -34,7 +34,7 @@ public class Player : Character
         {
             playercam.gameObject.SetActive(true);
             playercam.depth = 1;
-            //¿ÉÒÔ¶ÔÏà»ú²Ù×÷£¬Ğı×ªËõ·ÅÉ¶µÄ
+            //å¯ä»¥å¯¹ç›¸æœºæ“ä½œï¼Œæ—‹è½¬ç¼©æ”¾å•¥çš„
             isopencarm = true;
         }
         else
@@ -50,24 +50,24 @@ public class Player : Character
         if (!isopencarm) return;
 
         int rectwidth = Screen.width / 2;
-        int recthight = Screen.height / 2;//ÅÄÕÕ»ñÈ¡ÆÁÄ»µÄ·¶Î§
-        Rect rect = new Rect(0, 0, rectwidth, recthight);//¾ØĞÎX×ø±ê£¬¾ØĞÎY×ø±ê£¬¾ØĞÎµÄ³¤£¬¿í
-        RenderTexture rt = new RenderTexture(rectwidth, recthight, -1);//´´½¨ÁËÒ»¸öäÖÈ¾ÎÆÀí£¬Ïà»ú¿ÉÒÔÔÚÕâ¸öÎÆÀíÉÏäÖÈ¾
-        playercam.targetTexture = rt;//½«Ïà»úµÄäÖÈ¾Ä¿±êÉèÖÃÎªäÖÈ¾ÎÆÀí
-        playercam.Render();//ÊÖ¶¯äÖÈ¾Ò»Ö¡
-        RenderTexture.active = rt;//¼¤»îÕâ¸ört
-        Texture2D screenShot = new Texture2D(rectwidth, recthight);//´´½¨Ò»¸ö2DÎÆÀí£¬×¼±¸±£´æäÖÈ¾µÄÒ»Ö¡
-        screenShot.ReadPixels(rect, 0, 0);//´Óactive¼¤»îµÄrtÖĞ¶ÁÈ¡ÏñËØ
+        int recthight = Screen.height / 2;//æ‹ç…§è·å–å±å¹•çš„èŒƒå›´
+        Rect rect = new Rect(0, 0, rectwidth, recthight);//çŸ©å½¢Xåæ ‡ï¼ŒçŸ©å½¢Yåæ ‡ï¼ŒçŸ©å½¢çš„é•¿ï¼Œå®½
+        RenderTexture rt = new RenderTexture(rectwidth, recthight, -1);//åˆ›å»ºäº†ä¸€ä¸ªæ¸²æŸ“çº¹ç†ï¼Œç›¸æœºå¯ä»¥åœ¨è¿™ä¸ªçº¹ç†ä¸Šæ¸²æŸ“
+        playercam.targetTexture = rt;//å°†ç›¸æœºçš„æ¸²æŸ“ç›®æ ‡è®¾ç½®ä¸ºæ¸²æŸ“çº¹ç†
+        playercam.Render();//æ‰‹åŠ¨æ¸²æŸ“ä¸€å¸§
+        RenderTexture.active = rt;//æ¿€æ´»è¿™ä¸ªrt
+        Texture2D screenShot = new Texture2D(rectwidth, recthight);//åˆ›å»ºä¸€ä¸ª2Dçº¹ç†ï¼Œå‡†å¤‡ä¿å­˜æ¸²æŸ“çš„ä¸€å¸§
+        screenShot.ReadPixels(rect, 0, 0);//ä»activeæ¿€æ´»çš„rtä¸­è¯»å–åƒç´ 
         screenShot.Apply();
 
         playercam.targetTexture = null;
         RenderTexture.active = null;
-        GameObject.Destroy(rt);//¼ÇµÃÉ¾³ı»ØÊÕÕâ¸ört£¬unity²»»á×Ô¶¯»ØÊÕ
+        GameObject.Destroy(rt);//è®°å¾—åˆ é™¤å›æ”¶è¿™ä¸ªrtï¼Œunityä¸ä¼šè‡ªåŠ¨å›æ”¶
 
-        byte[] bytes = screenShot.EncodeToPNG();//½«2DÎÆÀí×ªÎªÒ»¸öpngÍ¼Æ¬
+        byte[] bytes = screenShot.EncodeToPNG();//å°†2Dçº¹ç†è½¬ä¸ºä¸€ä¸ªpngå›¾ç‰‡
         string filename = Application.dataPath + "/Screenshot" + photonum + ".png";
-        System.IO.File.WriteAllBytes(filename, bytes);//±£´æÔÚ±¾µØ
-        Debug.Log($"³É¹¦½ØÆÁÁËÒ»ÕÅÕÕÆ¬:{filename}");
+        System.IO.File.WriteAllBytes(filename, bytes);//ä¿å­˜åœ¨æœ¬åœ°
+        Debug.Log($"æˆåŠŸæˆªå±äº†ä¸€å¼ ç…§ç‰‡:{filename}");
         photonum++;
 
     }
